@@ -23,8 +23,8 @@ public class Appointment {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Consultation consultation;
-	
-	@GeneratedValue//(generator o strategy) Estrategia
+	/*
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer order;
-
+	*/
 }

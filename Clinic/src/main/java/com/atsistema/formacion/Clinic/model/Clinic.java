@@ -25,10 +25,7 @@ public class Clinic {
 	
 	private String adress;
 	
-	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "clinic")
 	private List<Room> rooms = new ArrayList<>();
 	
-	
-
 }

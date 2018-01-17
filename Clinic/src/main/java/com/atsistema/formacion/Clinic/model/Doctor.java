@@ -1,6 +1,7 @@
 package com.atsistema.formacion.Clinic.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,5 +26,6 @@ public class Doctor {
 	private String lastname;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "doctor")
-	private ArrayList<Consultation> consultations = new ArrayList<>();
+	private List<Consultation> consultations = new ArrayList<>();
+	
 }

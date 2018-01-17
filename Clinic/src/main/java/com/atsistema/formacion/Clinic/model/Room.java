@@ -28,7 +28,7 @@ public class Room {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Clinic clinic;
-	
+
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="room")
 	private List<Consultation> consultations = new ArrayList<>();
 

@@ -27,7 +27,7 @@ public class Consultation {
 	@GeneratedValue
 	private Integer id;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy= "appointment")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy= "consultation")
 	private List<Appointment> appointments = new ArrayList<>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
