@@ -1,12 +1,10 @@
 package com.atsistema.formacion.Clinic.model;
 
-import java.util.ArrayList;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,16 +12,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Doctor {
-
+public class Appointment {
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
 	
-	private String name;
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Patient patient;
 	
-	private String lastname;
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Consultation consultation;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "doctor")
-	private ArrayList<Consultation> consultations = new ArrayList<>();
+	@GeneratedValue//(generator o strategy) Estrategia
+	private Integer order;
+
 }
