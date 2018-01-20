@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.atsistema.formacion.Clinic.model.Clinic;
+import com.atsistema.formacion.Clinic.dto.ClinicDTO;
 import com.atsistema.formacion.Clinic.service.ClinicService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,29 +24,29 @@ public class ClinicController {
 	private ClinicService clinicService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Clinic> findAll(@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer size){
+	public List<ClinicDTO> findAll(@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer size){
 		log.info("Recuperando toda la lista de clinicas");
 		return clinicService.findAll(page,size);		
 	}
 	
 	//poner los log.info(GlobalString)
 	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}")
-	public Clinic findOneById(@PathVariable Integer idClinic) {
+	public ClinicDTO findOneById(@PathVariable Integer idClinic) {
 		return clinicService.findById(idClinic);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public Clinic create(@RequestBody Clinic c) {
+	public ClinicDTO create(@RequestBody ClinicDTO c) {
 		return clinicService.create(c);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{idClinic}")
-	public void update(@PathVariable Integer idClinic, @RequestBody Clinic c) {
+	public void update(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) {
 		clinicService.update(c);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idClinic}")
-	public void delete(@PathVariable Integer idClinic, @RequestBody Clinic c) {
+	public void delete(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) {
 		clinicService.delete(c);
 	}
 	
