@@ -9,37 +9,37 @@ public interface ClinicService {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	public Clinic findById(Integer id);
-	
-	/**
-	 * 
 	 * @param page
 	 * @param size
 	 * @return
 	 */
-	public List<Clinic> findAll(Integer page, Integer size);
+	public List<ClinicDTO> findAll(Integer page, Integer size);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public ClinicDTO findById(Integer id);
 	
 	/**
 	 * 
 	 * @param c
 	 * @return
 	 */
-	public Clinic create(Clinic c);
+	public ClinicDTO create(ClinicDTO c);
 	
 	/**
 	 * 
 	 * @param c
 	 */
-	public void update(Clinic c);
+	public void update(ClinicDTO c);
 
 	/**
 	 * 
 	 * @param c
 	 */
-	public void delete(Clinic c);
+	public void delete(ClinicDTO c);
 	
 	/**
 	 * 
