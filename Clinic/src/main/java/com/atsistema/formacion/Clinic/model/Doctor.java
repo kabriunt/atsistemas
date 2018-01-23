@@ -27,5 +27,4 @@ public class Doctor {
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "doctor")
 	private List<Consultation> consultations = new ArrayList<>();
-	
 }

@@ -24,12 +24,16 @@ public class Room {
 	private Integer id;
 	
 	@Column(unique=true)
-	private String roomName;
-	
+	private String name;
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Clinic clinic;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="room")
 	private List<Consultation> consultations = new ArrayList<>();
-
+	/*
+	public String toString(){
+		return String.format("Room [id=%d, roomNumber=%d]",id, roomNumber);
+		return id.toString();
+	}*/
 }

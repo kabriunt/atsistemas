@@ -3,8 +3,10 @@ package com.atsistema.formacion.Clinic.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +25,8 @@ public class Appointment {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Consultation consultation;
-	/*
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	
+	@SequenceGenerator(initialValue=1, allocationSize=10, name = "sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "sequence")
 	private Integer order;
-	*/
 }
