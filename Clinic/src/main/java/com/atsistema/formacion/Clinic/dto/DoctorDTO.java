@@ -20,6 +20,6 @@ public class DoctorDTO implements Serializable{
 	@Mapping(value="lastname")
 	private String lastnameDoctor;
 	
-	//Se podria añadir una lista de las ids de consultas 
-
+	//@Mapping(value = "consultations")
+	//private List<Consultation> idConsultations = new ArrayList<>();
 }

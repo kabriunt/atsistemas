@@ -3,21 +3,24 @@ package com.atsistema.formacion.Clinic.dto;
 
 import java.io.Serializable;
 
-import lombok.Data;
+import org.dozer.Mapping;
 
+import lombok.Data;
 
 @Data
 public class ClinicDTO implements Serializable{
 
 	private static final long serialVersionUID = -2215759703326698623L;
 	
-	//@Mapping(value="id")
-	private Integer id;
+	@Mapping(value = "id")
+	private Integer idClinic;
 	
-	private String name;
+	@Mapping(value = "name")
+	private String nameClinic;
 	
-	private String adress;
+	@Mapping(value = "adress")
+	private String adressClinic;
 	
-	
-
+	//@Mapping(value = "rooms")
+	//private List<Integer> idRooms = new ArrayList<>();	
 }
