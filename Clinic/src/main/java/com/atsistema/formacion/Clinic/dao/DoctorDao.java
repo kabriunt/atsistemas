@@ -11,5 +11,8 @@ import com.atsistema.formacion.Clinic.model.Doctor;
 public interface DoctorDao extends PagingAndSortingRepository<Doctor, Integer>{
 	
 	public List<Doctor> findByName(String name);
+	
+	//@Query("select ...")
+	//public List<Doctor> find5ByNameOrderByPatientDesc();
 
 }

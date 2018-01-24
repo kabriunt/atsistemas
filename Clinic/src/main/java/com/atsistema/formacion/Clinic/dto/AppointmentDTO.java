@@ -20,5 +20,5 @@ public class AppointmentDTO implements Serializable{
 	//@Mapping(value = "consultation") 
 	//private Integer idConsultation;
 	
-	private Integer order;
+	//private Integer order;
 }
