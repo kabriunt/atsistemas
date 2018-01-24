@@ -3,6 +3,7 @@ package com.atsistema.formacion.Clinic.service;
 import java.util.List;
 
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Appointment;
 
 public interface AppointmentService {
@@ -20,7 +21,7 @@ public interface AppointmentService {
 	 * @param idAppointment
 	 * @return
 	 */
-	public AppointmentDTO findById(Integer idAppointment);
+	public AppointmentDTO findById(Integer idAppointment) throws NotFoundException;
 
 	/**
 	 * 
@@ -39,7 +40,7 @@ public interface AppointmentService {
 	 * 
 	 * @param a
 	 */
-	public void delete(Integer a);
+	public void delete(Integer idAppointment) throws NotFoundException;
 	
 	/**
 	 * 

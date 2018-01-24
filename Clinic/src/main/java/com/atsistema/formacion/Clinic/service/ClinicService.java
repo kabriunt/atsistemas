@@ -3,6 +3,8 @@ package com.atsistema.formacion.Clinic.service;
 import java.util.List;
 
 import com.atsistema.formacion.Clinic.dto.ClinicDTO;
+import com.atsistema.formacion.Clinic.dto.RoomDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Clinic;
 
 public interface ClinicService {
@@ -17,10 +19,10 @@ public interface ClinicService {
 	
 	/**
 	 * 
-	 * @param id
+	 * @param idClinic
 	 * @return
 	 */
-	public ClinicDTO findById(Integer id);
+	public ClinicDTO findById(Integer idClinic) throws NotFoundException;
 	
 	/**
 	 * 
@@ -39,7 +41,14 @@ public interface ClinicService {
 	 * 
 	 * @param c
 	 */
-	public void delete(ClinicDTO c);
+	public void delete(Integer idClinic) throws NotFoundException;
+	
+	/**
+	 * 
+	 * @param idClinic
+	 * @return
+	 */
+	public List<RoomDTO> findRoomsByIdClinic(Integer idClinic);
 	
 	/**
 	 * 
@@ -53,7 +62,7 @@ public interface ClinicService {
 	 * @param clinic
 	 * @return
 	 */
-	public ClinicDTO map(Clinic clinic);
+	public ClinicDTO map(Clinic c);
 
 
 }

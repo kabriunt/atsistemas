@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.service.AppointmentService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,13 @@ public class AppointmentController {
 	private AppointmentService appointmentService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<AppointmentDTO> findAll(@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer size){
-		log.info("Recuperando toda la lista de citas");
+	public List<AppointmentDTO> findAll(@RequestParam(required=false, defaultValue="0") Integer page, @RequestParam(required=false, defaultValue="5") Integer size){
+		log.info("Recuperando toda la lista de Citas");
 		return appointmentService.findAll(page,size);		
 	}
-	
-	//poner los log.info(GlobalString)
+
 	@RequestMapping(method = RequestMethod.GET, value = "/{idAppointment}")
-	public AppointmentDTO findOneById(@PathVariable Integer idAppointment) {
+	public AppointmentDTO findOneById(@PathVariable Integer idAppointment) throws NotFoundException {
 		return appointmentService.findById(idAppointment);
 	}
 	
@@ -46,10 +46,7 @@ public class AppointmentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idAppointment}")
-	public void delete(@PathVariable Integer idAppointment, @RequestBody AppointmentDTO a) {
+	public void delete(@PathVariable Integer idAppointment, @RequestBody AppointmentDTO a) throws NotFoundException {
 		appointmentService.delete(idAppointment);
 	}
-	
-	
-
 }

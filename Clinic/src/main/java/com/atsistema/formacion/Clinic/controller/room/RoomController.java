@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atsistema.formacion.Clinic.dto.ConsultationDTO;
 import com.atsistema.formacion.Clinic.dto.RoomDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.service.RoomService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +26,13 @@ public class RoomController {
 	private RoomService roomService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<RoomDTO> findAll(@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer size){
+	public List<RoomDTO> findAll(@RequestParam(required=false, defaultValue="0") Integer page, @RequestParam(required=false, defaultValue="5") Integer size){
 		log.info("Recuperando toda la lista de Habitaciones");
 		return roomService.findAll(page,size);		
 	}
-	
-	//poner los log.info(GlobalString)
+
 	@RequestMapping(method = RequestMethod.GET, value = "/{idRoom}")
-	public RoomDTO findOneById(@PathVariable Integer idRoom) {
+	public RoomDTO findOneById(@PathVariable Integer idRoom) throws NotFoundException {
 		return roomService.findById(idRoom);
 	}
 	
@@ -46,8 +47,12 @@ public class RoomController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idRoom}")
-	public void delete(@PathVariable Integer idRoom/*, @RequestBody RoomDTO d*/) {
+	public void delete(@PathVariable Integer idRoom, @RequestBody RoomDTO r) throws NotFoundException {
 		roomService.delete(idRoom);
 	}
-
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{idRoom}/consultations")
+	public List<ConsultationDTO> findConsultationsByIdRoom(@PathVariable Integer idRoom) {
+		return roomService.findConsultationsByIdRoom(idRoom);
+	}
 }

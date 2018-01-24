@@ -1,17 +1,22 @@
 package com.atsistema.formacion.Clinic.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.atsistema.formacion.Clinic.dao.ClinicDao;
 import com.atsistema.formacion.Clinic.dto.ClinicDTO;
+import com.atsistema.formacion.Clinic.dto.RoomDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Clinic;
 import com.atsistema.formacion.Clinic.service.ClinicService;
+import com.atsistema.formacion.Clinic.service.RoomService;
 
 @Service
 public class ClinicServiceImpl implements ClinicService{
@@ -20,57 +25,48 @@ public class ClinicServiceImpl implements ClinicService{
 	private ClinicDao clinicDao;
 	
 	@Autowired
+	private RoomService roomService;
+	
+	@Autowired
 	private DozerBeanMapper mapper;
 
 	@Override
 	public List<ClinicDTO> findAll(Integer page, Integer size) {
-		/*
-		final Iterable<Clinic> findAll = clinicDao.findAll();
-		final List<ClinicDTO> res = new ArrayList<>();
-		findAll.forEach(c -> {
-			final ClinicDTO cDTO = map(c);
-			res.add(cDTO);
-		});
-		return res;
-		*/
-		List<Clinic> clinics = (List<Clinic>) clinicDao.findAll();
+		List<Clinic> clinics = (List<Clinic>) clinicDao.findAll(new PageRequest(page, size)).getContent();
 		return clinics.stream().map(u->map(u)).collect(Collectors.toList());
-		//return (List<Clinic>) clinicDao.findAll();
-		//final List<Clinic> clinics = clinicDao.findAll(new PageRequest(page, size)).getContent();
-		//return clinics.stream().map(u->map(u)).collect(Collectors.toList());
 	}
 	
 	@Override
-	public ClinicDTO findById(Integer id){
-		//final Clinic d = clinicDao.findOne(id);
-		//return map(d);
-		//return clinicDao.findOne(id);
-		Clinic find = clinicDao.findOne(id);
-		return map(Optional.ofNullable(find).orElseThrow(IllegalStateException::new));
+	public ClinicDTO findById(Integer idClinic) throws NotFoundException{
+		Clinic find = clinicDao.findOne(idClinic);
+		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));//NotFoundException
 	}
 
-	@Override//ClinicDTO en Clinic, en ambos
+	@Override
 	public ClinicDTO create(ClinicDTO c) {
-		//return clinicDao.save(c);
-		final Clinic save = clinicDao.save(map(c));
-		return map(save);
+		final Clinic clinic = clinicDao.save(map(c));
+		return map(clinic);
 	}
 
 	@Override
 	public void update(ClinicDTO c) {
-		//clinicDao.save(c);
-		
-		final Clinic clinic = map(c);
-		clinicDao.save(clinic);
-		
-		//final Clinic save = clinicDao.save(map(c));
-		//map(save);
+		final Clinic clinic = clinicDao.save(map(c));
+		map(clinic);
 	}
 
 	@Override
-	public void delete(ClinicDTO c) {
-		//clinicDao.delete(c);
-		clinicDao.delete(map(c));
+	public void delete(Integer idClinic) throws NotFoundException{
+		//clinicDao.delete(map(c));
+		clinicDao.delete(idClinic);
+	}
+	
+	@Override
+	public List<RoomDTO> findRoomsByIdClinic(Integer idClinic) {
+		final Clinic clinic = clinicDao.findOne(idClinic);
+		final List<RoomDTO> rooms = new ArrayList<>();
+		//clinic.getRooms().forEach(a -> rooms.add(mapper.map(a,RoomDTO.class)));
+		clinic.getRooms().forEach(a -> rooms.add(roomService.map(a)));
+		return rooms;
 	}
 
 	@Override
@@ -79,10 +75,7 @@ public class ClinicServiceImpl implements ClinicService{
 	}
 
 	@Override
-	public ClinicDTO map(Clinic clinic) {
-		return mapper.map(clinic, ClinicDTO.class);
+	public ClinicDTO map(Clinic c) {
+		return mapper.map(c, ClinicDTO.class);
 	}
-
-	
-
 }

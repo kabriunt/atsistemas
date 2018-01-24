@@ -37,7 +37,7 @@ public class Consultation {
 	private Room room;
 	
 	@Temporal(value=TemporalType.DATE)
-	private Date date;
+	private Date date = new Date();
 	
 	@Enumerated(EnumType.STRING)
 	private Turn turn;

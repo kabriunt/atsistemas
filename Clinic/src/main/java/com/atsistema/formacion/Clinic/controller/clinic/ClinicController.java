@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atsistema.formacion.Clinic.dto.ClinicDTO;
+import com.atsistema.formacion.Clinic.dto.RoomDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.service.ClinicService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +26,13 @@ public class ClinicController {
 	private ClinicService clinicService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<ClinicDTO> findAll(@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer size){
-		log.info("Recuperando toda la lista de clinicas");
+	public List<ClinicDTO> findAll(@RequestParam(required=false, defaultValue="0") Integer page, @RequestParam(required=false, defaultValue="5") Integer size){
+		log.info("Recuperando toda la lista de Clinicas");
 		return clinicService.findAll(page,size);		
 	}
-	
-	//poner los log.info(GlobalString)
+
 	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}")
-	public ClinicDTO findOneById(@PathVariable Integer idClinic) {
+	public ClinicDTO findOneById(@PathVariable Integer idClinic) throws NotFoundException {
 		return clinicService.findById(idClinic);
 	}
 	
@@ -46,9 +47,12 @@ public class ClinicController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idClinic}")
-	public void delete(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) {
-		clinicService.delete(c);
+	public void delete(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) throws NotFoundException {
+		clinicService.delete(idClinic);
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}/rooms")
+	public List<RoomDTO> findRoomById(@PathVariable Integer idClinic) {
+		return clinicService.findRoomsByIdClinic(idClinic);
+	}
 }

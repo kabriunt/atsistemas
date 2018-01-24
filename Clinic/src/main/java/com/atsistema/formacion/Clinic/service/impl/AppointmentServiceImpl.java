@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.atsistema.formacion.Clinic.dao.AppointmentDao;
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
+import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Appointment;
 import com.atsistema.formacion.Clinic.service.AppointmentService;
 
@@ -24,32 +26,32 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 	@Override
 	public List<AppointmentDTO> findAll(Integer page, Integer size) {
-		List<Appointment> appointments = (List<Appointment>) appointmentDao.findAll();
+		List<Appointment> appointments = (List<Appointment>) appointmentDao.findAll(new PageRequest(page, size)).getContent();
 		return appointments.stream().map(u->map(u)).collect(Collectors.toList());
 	}
 
 	@Override
-	public AppointmentDTO findById(Integer idAppointment) {
+	public AppointmentDTO findById(Integer idAppointment) throws NotFoundException{
 		Appointment find = appointmentDao.findOne(idAppointment);
-		return map(Optional.ofNullable(find).orElseThrow(IllegalStateException::new));
+		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
 	}
 
 	@Override
 	public AppointmentDTO create(AppointmentDTO a) {
-		final Appointment save = appointmentDao.save(map(a));
-		return map(save);
+		final Appointment appointment = appointmentDao.save(map(a));
+		return map(appointment);
 	}
 
 	@Override
 	public void update(AppointmentDTO a) {
-		final Appointment save = appointmentDao.save(map(a));
-		map(save);
+		final Appointment appointment = appointmentDao.save(map(a));
+		map(appointment);
 		
 	}
 
 	@Override
-	public void delete(Integer a) {
-		appointmentDao.delete(a);
+	public void delete(Integer idAppointment) throws NotFoundException {
+		appointmentDao.delete(idAppointment);
 		
 	}
 
@@ -61,7 +63,5 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Override
 	public AppointmentDTO map(Appointment a) {
 		return mapper.map(a, AppointmentDTO.class);
-	}
-	
-	
+	}	
 }
