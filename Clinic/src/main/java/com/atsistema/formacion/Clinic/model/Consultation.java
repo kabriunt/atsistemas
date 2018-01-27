@@ -41,10 +41,4 @@ public class Consultation {
 	
 	@Enumerated(EnumType.STRING)
 	private Turn turn;
-	/*
-	@Embedded
-	@Column(unique=true)
-	private CodeConsultation Code; MIRAR COMO HACER EL CODIGO, (CON OTRA CLASE O AQUI MISMO)
-	*/
-	//FALTA INDICE UNICO DE LOS CUATRO CAMPOS PRINCIPALES
 }

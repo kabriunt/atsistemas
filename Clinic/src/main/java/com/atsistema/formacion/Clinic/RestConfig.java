@@ -1,15 +1,15 @@
 package com.atsistema.formacion.Clinic;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class DozerConfig {
-
+public class RestConfig {
+	
 	@Bean
-	public DozerBeanMapper dozer() {
-		return new DozerBeanMapper();
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
-}
 
+}

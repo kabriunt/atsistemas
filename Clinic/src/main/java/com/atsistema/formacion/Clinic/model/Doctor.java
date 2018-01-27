@@ -3,6 +3,7 @@ package com.atsistema.formacion.Clinic.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,9 @@ public class Doctor {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	//@Column(unique = true, nullable = true)
+	//private String idApi;
 	
 	private String name;
 	

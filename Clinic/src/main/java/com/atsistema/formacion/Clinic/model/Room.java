@@ -31,9 +31,4 @@ public class Room {
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="room")
 	private List<Consultation> consultations = new ArrayList<>();
-	/*
-	public String toString(){
-		return String.format("Room [id=%d, roomNumber=%d]",id, roomNumber);
-		return id.toString();
-	}*/
 }

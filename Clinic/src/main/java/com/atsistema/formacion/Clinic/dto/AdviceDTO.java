@@ -13,10 +13,9 @@ public class AdviceDTO implements Serializable{
 
 	private String msg;
 
-	public AdviceDTO(int i, String message) {
+	public AdviceDTO(int code, String msg) {
 		super();
-		code = i;
-		msg = message;
+		this.code = code;
+		this.msg = msg;
 	}
-
 }

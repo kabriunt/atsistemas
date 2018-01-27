@@ -1,0 +1,20 @@
+package com.atsistema.formacion.Clinic.dto;
+
+import java.io.Serializable;
+
+import org.dozer.Mapping;
+
+public class DoctorApiDTO implements Serializable{
+
+	private static final long serialVersionUID = -4699796476722187752L;
+	
+	@Mapping("id")
+	private Integer idDoctor;
+	
+	@Mapping(value="name")
+	private String nameDoctor;
+	
+	@Mapping(value="price")
+	private String priceDoctor;
+	
+}

@@ -1,7 +1,6 @@
 package com.atsistema.formacion.Clinic.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.dozer.Mapping;
 
@@ -17,17 +16,17 @@ public class ConsultationDTO implements Serializable{
 	@Mapping(value = "id")
 	private Integer idConsultation;
 	
-	private Date date;
+	private String date;
 	
 	private Turn turn;
 	/*
 	@Mapping(value = "appointments")
 	private List<Appointment> idAppointments = new ArrayList<>();
-
-	@Mapping(value = "doctor")
-	private Doctor idDoctor;
-	
-	@Mapping(value = "room")
-	private Room idRoom;
 	*/
+	@Mapping(value = "doctor")
+	private Integer idDoctor;
+
+	@Mapping(value = "room")
+	private Integer idRoom;
+	
 }
