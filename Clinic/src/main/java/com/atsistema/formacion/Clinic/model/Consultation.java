@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +39,7 @@ public class Consultation {
 	private Room room;
 	
 	@Temporal(value=TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy/mm/dd")
 	private Date date = new Date();
 	
 	@Enumerated(EnumType.STRING)

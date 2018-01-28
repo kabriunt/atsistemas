@@ -10,6 +10,7 @@ import com.atsistema.formacion.Clinic.model.Room;
 public interface RoomService {
 
 	/**
+	 * Realiza la busqueda de todos los Doctores existentes (con paginacion)
 	 * 
 	 * @param page
 	 * @param size
@@ -18,6 +19,7 @@ public interface RoomService {
 	public List<RoomDTO> findAll(Integer page, Integer size);
 
 	/**
+	 * Busca por Id
 	 * 
 	 * @param idRoom
 	 * @return
@@ -25,6 +27,24 @@ public interface RoomService {
 	public RoomDTO findById(Integer idRoom) throws NotFoundException;
 
 	/**
+	 * Busca por Id
+	 * 
+	 * @param idRoom
+	 * @return
+	 * @throws NotFoundException 
+	 */
+	public Room findOne(Integer idRoom) throws NotFoundException;
+	
+	/**
+	 * Recupera todas las Consultas de un Sala
+	 * 	
+	 * @param idRoom
+	 * @return
+	 */
+	public List<ConsultationDTO> findConsultationsByIdRoom(Integer idRoom);
+
+	/**
+	 * Crea una Sala
 	 * 
 	 * @param r
 	 * @return
@@ -32,25 +52,21 @@ public interface RoomService {
 	public RoomDTO create(RoomDTO r);
 
 	/**
+	 * Modifica una Sala
 	 * 
 	 * @param r
 	 */
 	public void update(RoomDTO r);
 
 	/**
+	 * Borra una Sala
 	 * 
 	 * @param idRoom
 	 */
 	public void delete(Integer idRoom) throws NotFoundException;
 	
 	/**
-	 * 	
-	 * @param idRoom
-	 * @return
-	 */
-	public List<ConsultationDTO> findConsultationsByIdRoom(Integer idRoom);
-	
-	/**
+	 * Transforma una SalaDTO en una Sala
 	 * 
 	 * @param dto
 	 * @return
@@ -58,10 +74,10 @@ public interface RoomService {
 	public Room map(RoomDTO dto);
 	
 	/**
+	 * Transforma una Sala en una SalaDTO
 	 * 
 	 * @param r
 	 * @return
 	 */
 	public RoomDTO map(Room r);
-
 }

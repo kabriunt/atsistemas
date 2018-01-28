@@ -21,11 +21,16 @@ public class DoctorDTO implements Serializable{
 	@Mapping("id")
 	private Integer idDoctor;
 	
+	@Mapping("idApi")
+	private String idApi;
+	
 	@Mapping(value="name")
 	private String nameDoctor;
 	
 	@Mapping(value="lastname")
 	private String lastnameDoctor;
+	
+	private Double price;
 
 	
 	//@Mapping(value = "consultations")

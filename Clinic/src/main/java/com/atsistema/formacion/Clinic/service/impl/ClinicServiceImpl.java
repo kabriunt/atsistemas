@@ -39,7 +39,21 @@ public class ClinicServiceImpl implements ClinicService{
 	@Override
 	public ClinicDTO findById(Integer idClinic) throws NotFoundException{
 		Clinic find = clinicDao.findOne(idClinic);
-		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));//NotFoundException
+		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
+	}
+	
+	@Override
+	public List<ClinicDTO> finByName(String nameClinic) {
+		List<Clinic> clinics = clinicDao.findByName(nameClinic);
+		return clinics.stream().map(u->map(u)).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<RoomDTO> findRoomsByIdClinic(Integer idClinic) {
+		final Clinic clinic = clinicDao.findOne(idClinic);
+		final List<RoomDTO> rooms = new ArrayList<>();
+		clinic.getRooms().forEach(a -> rooms.add(roomService.map(a)));
+		return rooms;
 	}
 
 	@Override
@@ -56,17 +70,7 @@ public class ClinicServiceImpl implements ClinicService{
 
 	@Override
 	public void delete(Integer idClinic) throws NotFoundException{
-		//clinicDao.delete(map(c));
 		clinicDao.delete(idClinic);
-	}
-	
-	@Override
-	public List<RoomDTO> findRoomsByIdClinic(Integer idClinic) {
-		final Clinic clinic = clinicDao.findOne(idClinic);
-		final List<RoomDTO> rooms = new ArrayList<>();
-		//clinic.getRooms().forEach(a -> rooms.add(mapper.map(a,RoomDTO.class)));
-		clinic.getRooms().forEach(a -> rooms.add(roomService.map(a)));
-		return rooms;
 	}
 
 	@Override

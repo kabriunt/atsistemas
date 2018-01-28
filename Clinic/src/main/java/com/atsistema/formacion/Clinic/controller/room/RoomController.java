@@ -27,32 +27,37 @@ public class RoomController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<RoomDTO> findAll(@RequestParam(required=false, defaultValue="0") Integer page, @RequestParam(required=false, defaultValue="5") Integer size){
-		log.info("Recuperando toda la lista de Habitaciones");
+		log.info("Recuperando toda la lista de Salas");
 		return roomService.findAll(page,size);		
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{idRoom}")
 	public RoomDTO findOneById(@PathVariable Integer idRoom) throws NotFoundException {
+		log.info("Recuperando Sala con Id = " + idRoom);
 		return roomService.findById(idRoom);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{idRoom}/consultations")
+	public List<ConsultationDTO> findConsultationsByIdRoom(@PathVariable Integer idRoom) {
+		log.info("Recuperando todas las Consultas de la Sala con id = " + idRoom);
+		return roomService.findConsultationsByIdRoom(idRoom);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public RoomDTO create(@RequestBody RoomDTO r) {
+		log.info("Creando Sala = " + r);
 		return roomService.create(r);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{idRoom}")
 	public void update(@PathVariable Integer idRoom, @RequestBody RoomDTO r) {
+		log.info("Modificando Sala = " + r);
 		roomService.update(r);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idRoom}")
-	public void delete(@PathVariable Integer idRoom, @RequestBody RoomDTO r) throws NotFoundException {
+	public void delete(@PathVariable Integer idRoom) throws NotFoundException {
+		log.info("Borrando Sala con id =" + idRoom);
 		roomService.delete(idRoom);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/{idRoom}/consultations")
-	public List<ConsultationDTO> findConsultationsByIdRoom(@PathVariable Integer idRoom) {
-		return roomService.findConsultationsByIdRoom(idRoom);
 	}
 }

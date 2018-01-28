@@ -20,7 +20,4 @@ public class ClinicDTO implements Serializable{
 	
 	@Mapping(value = "adress")
 	private String adressClinic;
-	
-	//@Mapping(value = "rooms")
-	//private List<Integer> idRooms = new ArrayList<>();	
 }

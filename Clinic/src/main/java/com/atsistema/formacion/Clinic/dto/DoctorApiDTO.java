@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import org.dozer.Mapping;
 
+import lombok.Data;
+
+@Data
 public class DoctorApiDTO implements Serializable{
 
 	private static final long serialVersionUID = -4699796476722187752L;
@@ -11,10 +14,14 @@ public class DoctorApiDTO implements Serializable{
 	@Mapping("id")
 	private Integer idDoctor;
 	
-	@Mapping(value="name")
-	private String nameDoctor;
+	@Mapping(value="id_api")
+	private String idDoctorApi;
 	
 	@Mapping(value="price")
-	private String priceDoctor;
+	private Double price;
+	
+	private Double appointments;
+	
+	private Double benefice;
 	
 }

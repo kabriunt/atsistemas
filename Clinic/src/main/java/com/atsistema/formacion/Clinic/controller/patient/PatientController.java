@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
 import com.atsistema.formacion.Clinic.dto.PatientDTO;
+import com.atsistema.formacion.Clinic.exception.InvalidDataException;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.service.PatientService;
 
@@ -33,26 +34,30 @@ public class PatientController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{idPatient}")
 	public PatientDTO findOneById(@PathVariable Integer idPatient) throws NotFoundException {
+		log.info("Recuperando Paciente con Id = " + idPatient);
 		return patientService.findById(idPatient);
-	}
-	
-	@RequestMapping(method = RequestMethod.POST)
-	public PatientDTO create(@RequestBody PatientDTO p) {
-		return patientService.create(p);
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT, value = "/{idPatient}")
-	public void update(@PathVariable Integer idPatient, @RequestBody PatientDTO p) {
-		patientService.update(p);
-	}
-	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{idPatient}")
-	public void delete(@PathVariable Integer idPatient, @RequestBody PatientDTO p) throws NotFoundException {
-		patientService.delete(idPatient);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{idPatient}/appointments")
 	public List<AppointmentDTO> findAppointmentsByIdPatient(@PathVariable Integer idPatient) {
 		return patientService.findAppointmentsByIdPatient(idPatient);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public PatientDTO create(@RequestBody PatientDTO p) throws InvalidDataException {
+		log.info("Creando Paciente = " + p);
+		return patientService.create(p);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/{idPatient}")
+	public void update(@PathVariable Integer idPatient, @RequestBody PatientDTO p) {
+		log.info("Modificando Paciente = " + p);
+		patientService.update(p);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{idPatient}")
+	public void delete(@PathVariable Integer idPatient) throws NotFoundException {
+		log.info("Borrando Paciente con Id = " + idPatient);
+		patientService.delete(idPatient);
 	}
 }

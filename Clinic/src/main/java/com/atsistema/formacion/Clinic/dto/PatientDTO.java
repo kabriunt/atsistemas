@@ -19,7 +19,4 @@ public class PatientDTO implements Serializable{
 	
 	@Mapping(value = "lastname")
 	private String lastnamePatient;
-
-	//@Mapping(value = "appointments")
-	//private List<Appointment> idAppointements = new ArrayList<>();
 }

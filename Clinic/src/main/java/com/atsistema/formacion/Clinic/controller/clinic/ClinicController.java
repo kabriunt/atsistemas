@@ -33,26 +33,37 @@ public class ClinicController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}")
 	public ClinicDTO findOneById(@PathVariable Integer idClinic) throws NotFoundException {
+		log.info("Recuperando Clinica con Id = " + idClinic);
 		return clinicService.findById(idClinic);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/name={nameClinic}")
+	public List<ClinicDTO> findByName(@PathVariable String nameClinic){
+		log.info("Recuperando Clinica con nombre = " + nameClinic);
+		return clinicService.finByName(nameClinic);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}/rooms")
+	public List<RoomDTO> findRoomsById(@PathVariable Integer idClinic) {
+		log.info("Recuperando todas las Salas de la Clinica con id = " + idClinic);
+		return clinicService.findRoomsByIdClinic(idClinic);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ClinicDTO create(@RequestBody ClinicDTO c) {
+		log.info("Creando Clinica = " + c);
 		return clinicService.create(c);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{idClinic}")
 	public void update(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) {
+		log.info("Modificando Clinica = " + c);
 		clinicService.update(c);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idClinic}")
-	public void delete(@PathVariable Integer idClinic, @RequestBody ClinicDTO c) throws NotFoundException {
+	public void delete(@PathVariable Integer idClinic) throws NotFoundException {
+		log.info("Borrando Clinica con Id = " + idClinic);
 		clinicService.delete(idClinic);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}/rooms")
-	public List<RoomDTO> findRoomById(@PathVariable Integer idClinic) {
-		return clinicService.findRoomsByIdClinic(idClinic);
 	}
 }

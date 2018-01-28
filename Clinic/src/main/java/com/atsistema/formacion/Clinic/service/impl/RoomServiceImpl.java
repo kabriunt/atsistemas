@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.atsistema.formacion.Clinic.dao.RoomDao;
@@ -31,7 +32,7 @@ public class RoomServiceImpl implements RoomService{
 	
 	@Override
 	public List<RoomDTO> findAll(Integer page, Integer size) {
-		List<Room> Rooms = (List<Room>) roomDao.findAll();
+		List<Room> Rooms = (List<Room>) roomDao.findAll(new PageRequest(page, size)).getContent();
 		return Rooms.stream().map(u->map(u)).collect(Collectors.toList());
 	}
 
@@ -39,6 +40,21 @@ public class RoomServiceImpl implements RoomService{
 	public RoomDTO findById(Integer idRoom) throws NotFoundException {
 		Room find = roomDao.findOne(idRoom);
 		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
+	}
+	
+
+	@Override
+	public Room findOne(Integer idRoom) throws NotFoundException {
+		Room find = roomDao.findOne(idRoom);
+		return Optional.ofNullable(find).orElseThrow(NotFoundException::new);
+	}
+		
+	@Override
+	public List<ConsultationDTO> findConsultationsByIdRoom(Integer idRoom) {
+		final Room room = roomDao.findOne(idRoom);
+		final List<ConsultationDTO> consultations = new ArrayList<>();
+		room.getConsultations().forEach(a -> consultations.add(consultationService.map(a)));
+		return consultations;
 	}
 
 	@Override
@@ -55,17 +71,7 @@ public class RoomServiceImpl implements RoomService{
 
 	@Override
 	public void delete(Integer idRoom) throws NotFoundException{
-		roomDao.delete(idRoom);
-		
-	}
-	
-	@Override
-	public List<ConsultationDTO> findConsultationsByIdRoom(Integer idRoom) {
-		final Room room = roomDao.findOne(idRoom);
-		final List<ConsultationDTO> consultations = new ArrayList<>();
-		//doctor.getRooms().forEach(a -> consultations.add(mapper.map(a,ConsultationDTO.class)));
-		room.getConsultations().forEach(a -> consultations.add(consultationService.map(a)));
-		return consultations;
+		roomDao.delete(idRoom);	
 	}
 
 	@Override

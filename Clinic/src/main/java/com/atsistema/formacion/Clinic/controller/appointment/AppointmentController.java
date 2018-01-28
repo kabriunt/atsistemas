@@ -32,21 +32,25 @@ public class AppointmentController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{idAppointment}")
 	public AppointmentDTO findOneById(@PathVariable Integer idAppointment) throws NotFoundException {
+		log.info("Recuperando Cita con Id = " + idAppointment);
 		return appointmentService.findById(idAppointment);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public AppointmentDTO create(@RequestBody AppointmentDTO a) {
+	public AppointmentDTO create(@RequestBody AppointmentDTO a) throws NotFoundException {
+		log.info("Creando Cita = " + a);
 		return appointmentService.create(a);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/{idAppointment}")
-	public void update(@PathVariable Integer idAppointment, @RequestBody AppointmentDTO a) {
+	public void update(@PathVariable Integer idAppointment, @RequestBody AppointmentDTO a) throws NotFoundException {
+		log.info("Modificando Cita = " + a);
 		appointmentService.update(a);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{idAppointment}")
-	public void delete(@PathVariable Integer idAppointment, @RequestBody AppointmentDTO a) throws NotFoundException {
+	public void delete(@PathVariable Integer idAppointment) throws NotFoundException {
+		log.info("Borrando Cita con Id = " + idAppointment);
 		appointmentService.delete(idAppointment);
 	}
 }

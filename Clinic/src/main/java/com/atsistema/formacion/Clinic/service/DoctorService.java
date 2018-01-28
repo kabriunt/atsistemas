@@ -1,8 +1,10 @@
 package com.atsistema.formacion.Clinic.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.atsistema.formacion.Clinic.dto.ConsultationDTO;
+import com.atsistema.formacion.Clinic.dto.DoctorApiDTO;
 import com.atsistema.formacion.Clinic.dto.DoctorDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Doctor;
@@ -10,6 +12,7 @@ import com.atsistema.formacion.Clinic.model.Doctor;
 public interface DoctorService {
 	
 	/**
+	 * Realiza la busqueda de todos los Doctores existentes (con paginacion)
 	 * 
 	 * @param page
 	 * @param size
@@ -18,32 +21,33 @@ public interface DoctorService {
 	public List<DoctorDTO> findAll(Integer page, Integer size);
 
 	/**
+	 * Busca por Id
 	 * 
 	 * @param idDoctor
 	 * @return
 	 */
 	public DoctorDTO findById(Integer idDoctor) throws NotFoundException;
-
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	public DoctorDTO create(DoctorDTO d);
-
-	/**
-	 * 
-	 * @param d
-	 */
-	public void update(DoctorDTO d);
-
-	/**
-	 * 
-	 * @param d
-	 */
-	public void delete(Integer d) throws NotFoundException;
 	
 	/**
+	 * Busca por Id
+	 * 
+	 * @param idDoctor
+	 * @return
+	 * @throws NotFoundException
+	 */
+	public Doctor findOne(Integer idDoctor) throws NotFoundException;
+
+	
+	/**
+	 * Busca por Nombre
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public List<DoctorDTO> findByName(String name);
+	
+	/**
+	 * Recupera todas las Consultas de un Doctor
 	 * 
 	 * @param idDoctor
 	 * @return
@@ -51,6 +55,45 @@ public interface DoctorService {
 	public List<ConsultationDTO> findConsultationsByIdDoctor(Integer idDoctor);
 	
 	/**
+	 * Recupera los n Doctores con mas Pacientes
+	 * 
+	 * @return
+	 */
+	public List<DoctorDTO> find5ByNameOrderByPatientsDesc();
+
+	/**
+	 * Recupera los N Doctores que han realizado consultas entre las fechas dadas
+	 * 
+	 * @param ini
+	 * @param end
+	 * @return
+	 */
+	public List<DoctorApiDTO> findByDate(Date iniDate, Date endDate);
+
+	/**
+	 * Crea un Doctor
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public DoctorDTO create(DoctorDTO d);
+
+	/**
+	 * Modifica un Doctor
+	 * 
+	 * @param d
+	 */
+	public void update(DoctorDTO d);
+
+	/**
+	 * Borra un Doctor
+	 * 
+	 * @param d
+	 */
+	public void delete(Integer d) throws NotFoundException;
+	
+	/**
+	 * Transforma un DoctorDTO en un Doctor
 	 * 
 	 * @param dto
 	 * @return
@@ -58,10 +101,18 @@ public interface DoctorService {
 	public Doctor map(DoctorDTO dto);
 	
 	/**
+	 * Transforma un Doctor en un DoctorDTO
 	 * 
 	 * @param doctor
 	 * @return
 	 */
 	public DoctorDTO map(Doctor d);
+
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public DoctorApiDTO mapApi(Doctor d);
 
 }

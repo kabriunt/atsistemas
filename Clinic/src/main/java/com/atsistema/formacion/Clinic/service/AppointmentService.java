@@ -9,6 +9,7 @@ import com.atsistema.formacion.Clinic.model.Appointment;
 public interface AppointmentService {
 
 	/**
+	 * Realiza la busqueda de todas las Citas existentes (con paginacion)
 	 * 
 	 * @param page
 	 * @param size
@@ -17,6 +18,7 @@ public interface AppointmentService {
 	public List<AppointmentDTO> findAll(Integer page, Integer size);
 
 	/**
+	 * Busca por Id
 	 * 
 	 * @param idAppointment
 	 * @return
@@ -24,32 +26,40 @@ public interface AppointmentService {
 	public AppointmentDTO findById(Integer idAppointment) throws NotFoundException;
 
 	/**
+	 * Crea una Cita
 	 * 
 	 * @param a
 	 * @return
+	 * @throws NotFoundException 
 	 */
-	public AppointmentDTO create(AppointmentDTO a);
+	public AppointmentDTO create(AppointmentDTO a) throws NotFoundException;
 
 	/**
+	 * Modifica una Cita
 	 * 
 	 * @param a
+	 * @throws NotFoundException 
 	 */
-	public void update(AppointmentDTO a);
+	public void update(AppointmentDTO a) throws NotFoundException;
 
 	/**
+	 * Borra una Cita
 	 * 
 	 * @param a
 	 */
 	public void delete(Integer idAppointment) throws NotFoundException;
 	
 	/**
+	 * Transforma una CitaDTO en una Cita
 	 * 
 	 * @param dto
 	 * @return
+	 * @throws NotFoundException 
 	 */
-	public Appointment map(AppointmentDTO dto);
+	public Appointment map(AppointmentDTO dto) throws NotFoundException;
 	
 	/**
+	 * Transforma una Cita en una CitaDTO
 	 * 
 	 * @param a
 	 * @return

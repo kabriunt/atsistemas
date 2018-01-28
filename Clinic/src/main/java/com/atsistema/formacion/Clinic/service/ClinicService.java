@@ -10,6 +10,7 @@ import com.atsistema.formacion.Clinic.model.Clinic;
 public interface ClinicService {
 	
 	/**
+	 * Realiza la busqueda de todas las Clinicas existentes (con paginacion)
 	 * 
 	 * @param page
 	 * @param size
@@ -18,6 +19,7 @@ public interface ClinicService {
 	public List<ClinicDTO> findAll(Integer page, Integer size);
 	
 	/**
+	 * Busca por Id
 	 * 
 	 * @param idClinic
 	 * @return
@@ -25,25 +27,15 @@ public interface ClinicService {
 	public ClinicDTO findById(Integer idClinic) throws NotFoundException;
 	
 	/**
+	 * Busca por Nombre
 	 * 
-	 * @param c
+	 * @param nameRoom
 	 * @return
 	 */
-	public ClinicDTO create(ClinicDTO c);
+	public List<ClinicDTO> finByName(String nameRoom);
 	
 	/**
-	 * 
-	 * @param c
-	 */
-	public void update(ClinicDTO c);
-
-	/**
-	 * 
-	 * @param c
-	 */
-	public void delete(Integer idClinic) throws NotFoundException;
-	
-	/**
+	 * Recupera todas las Salas de una Clinica 
 	 * 
 	 * @param idClinic
 	 * @return
@@ -51,6 +43,29 @@ public interface ClinicService {
 	public List<RoomDTO> findRoomsByIdClinic(Integer idClinic);
 	
 	/**
+	 * Crea una Clinica
+	 * 
+	 * @param c
+	 * @return
+	 */
+	public ClinicDTO create(ClinicDTO c);
+	
+	/**
+	 * Modifica una Clinica
+	 * 
+	 * @param c
+	 */
+	public void update(ClinicDTO c);
+
+	/**
+	 * Borra una Clinica
+	 * 
+	 * @param c
+	 */
+	public void delete(Integer idClinic) throws NotFoundException;
+	
+	/**
+	 * Transforma una ClinicaDTO en una Clinica
 	 * 
 	 * @param dto
 	 * @return
@@ -58,11 +73,11 @@ public interface ClinicService {
 	public Clinic map(ClinicDTO dto);
 	
 	/**
+	 * Transforma una Clinica en una ClinicaDTO
 	 * 
 	 * @param clinic
 	 * @return
 	 */
 	public ClinicDTO map(Clinic c);
-
 
 }

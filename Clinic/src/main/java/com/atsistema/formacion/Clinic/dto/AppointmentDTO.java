@@ -14,11 +14,9 @@ public class AppointmentDTO implements Serializable{
 	@Mapping(value = "id")
 	private Integer idAppointment;
 	
-	//@Mapping(value = "patient")
-	//private Integer idPatient;
+	@Mapping(value = "patient")
+	private Integer idPatient;
 	
-	//@Mapping(value = "consultation") 
-	//private Integer idConsultation;
-	
-	//private Integer order;
+	@Mapping(value = "consultation") 
+	private Integer idConsultation;
 }

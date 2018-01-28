@@ -16,10 +16,4 @@ public class RoomDTO implements Serializable{
 	
 	@Mapping(value = "name")
 	private String nameRoom;
-	
-	//@Mapping(value = "clinic")
-	//private Integer idClinic;
-	
-	//@Mapping(value = "consultations")
-	//private List<Consultation> idConsultations = new ArrayList<>();
 }
