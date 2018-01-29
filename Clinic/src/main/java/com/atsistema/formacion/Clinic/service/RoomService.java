@@ -64,20 +64,4 @@ public interface RoomService {
 	 * @param idRoom
 	 */
 	public void delete(Integer idRoom) throws NotFoundException;
-	
-	/**
-	 * Transforma una SalaDTO en una Sala
-	 * 
-	 * @param dto
-	 * @return
-	 */
-	public Room map(RoomDTO dto);
-	
-	/**
-	 * Transforma una Sala en una SalaDTO
-	 * 
-	 * @param r
-	 * @return
-	 */
-	public RoomDTO map(Room r);
 }

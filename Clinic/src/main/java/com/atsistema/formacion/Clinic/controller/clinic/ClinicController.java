@@ -40,7 +40,7 @@ public class ClinicController {
 	@RequestMapping(method = RequestMethod.GET, value = "/name={nameClinic}")
 	public List<ClinicDTO> findByName(@PathVariable String nameClinic){
 		log.info("Recuperando Clinica con nombre = " + nameClinic);
-		return clinicService.finByName(nameClinic);
+		return clinicService.findByName(nameClinic);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{idClinic}/rooms")

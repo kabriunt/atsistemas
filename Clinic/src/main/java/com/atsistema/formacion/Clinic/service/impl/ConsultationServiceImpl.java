@@ -1,6 +1,7 @@
 package com.atsistema.formacion.Clinic.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,12 +15,9 @@ import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
 import com.atsistema.formacion.Clinic.dto.ConsultationDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Consultation;
-import com.atsistema.formacion.Clinic.model.Doctor;
-import com.atsistema.formacion.Clinic.model.Room;
-import com.atsistema.formacion.Clinic.service.AppointmentService;
 import com.atsistema.formacion.Clinic.service.ConsultationService;
-import com.atsistema.formacion.Clinic.service.DoctorService;
-import com.atsistema.formacion.Clinic.service.RoomService;
+import com.atsistema.formacion.Clinic.service.MapperService;
+
 
 @Service
 public class ConsultationServiceImpl implements ConsultationService{
@@ -28,24 +26,18 @@ public class ConsultationServiceImpl implements ConsultationService{
 	private ConsultationDao consultationDao;
 	
 	@Autowired
-	private AppointmentService appointmentService;
-	
-	@Autowired
-	private DoctorService doctorService;
-	
-	@Autowired
-	private RoomService roomService;
+	private MapperService mp;
 	
 	@Override
 	public List<ConsultationDTO> findAll(Integer page, Integer size) {
 		List<Consultation> consultations = (List<Consultation>) consultationDao.findAll(new PageRequest(page, size)).getContent();
-		return consultations.stream().map(u->map(u)).collect(Collectors.toList());
+		return consultations.stream().map(u->mp.map(u)).collect(Collectors.toList());
 	}
 
 	@Override
 	public ConsultationDTO findById(Integer idConsultation) throws NotFoundException {
 		Consultation find = consultationDao.findOne(idConsultation);
-		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
+		return mp.map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
 	}
 	
 	@Override
@@ -58,53 +50,30 @@ public class ConsultationServiceImpl implements ConsultationService{
 	public List<AppointmentDTO> findAppointmentsByIdConsultation(Integer idConsultation) {
 		final Consultation consultation = consultationDao.findOne(idConsultation);
 		final List<AppointmentDTO> appointments = new ArrayList<>();
-		consultation.getAppointments().forEach(a -> appointments.add(appointmentService.map(a)));
+		consultation.getAppointments().forEach(a -> appointments.add(mp.map(a)));
 		return appointments;
+	}
+	
+	@Override
+	public List<Consultation> findByDate(Date iniDate, Date endDate){
+		List<Consultation> consultations = consultationDao.findByDate(iniDate,endDate);
+		return consultations;
 	}
 
 	@Override
 	public ConsultationDTO create(ConsultationDTO c) throws NotFoundException {
-		final Consultation consultation = consultationDao.save(map(c));
-		return map(consultationDao.save(consultation));
+		final Consultation consultation = consultationDao.save(mp.map(c));
+		return mp.map(consultationDao.save(consultation));
 	}
 
 	@Override
 	public void update(ConsultationDTO c) throws NotFoundException {
-		final Consultation consultation = consultationDao.save(map(c));
-		map(consultation);
+		final Consultation consultation = consultationDao.save(mp.map(c));
+		mp.map(consultation);
 	}
 
 	@Override
 	public void delete(Integer idConsultation) throws NotFoundException {
 		consultationDao.delete(idConsultation);
-	}
-
-	@Override
-	public Consultation map(ConsultationDTO dto) throws NotFoundException {
-		final Consultation consultation;
-		final Doctor doctor = doctorService.findOne(dto.getIdDoctor());
-		final Room room = roomService.findOne(dto.getIdRoom());
-		
-		if (consultationDao.exists(dto.getIdConsultation())) {
-			consultation = consultationDao.findOne(dto.getIdConsultation());			
-		} else {
-			consultation = new Consultation();
-		}
-		consultation.setTurn(dto.getTurn());
-		consultation.setDate(dto.getDate());
-		consultation.setDoctor(doctor);
-		consultation.setRoom(room);		
-		return consultation;
-	}
-
-	@Override
-	public ConsultationDTO map(Consultation c) {
-		final ConsultationDTO dto =new ConsultationDTO();
-		dto.setIdConsultation(c.getId());
-		dto.setTurn(c.getTurn());
-		dto.setDate(c.getDate());
-		dto.setIdRoom(c.getRoom().getId());
-		dto.setIdDoctor(c.getDoctor().getId());
-		return dto;
 	}
 }

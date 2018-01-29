@@ -26,5 +26,4 @@ public class ConsultationDTO implements Serializable{
 	private Date date;
 	
 	private Turn turn;
-	
 }

@@ -55,7 +55,7 @@ public class MapperServiceImpl implements MapperService{
 		final Consultation consultation = consultationService.findOne(dto.getIdConsultation());
 		final Patient patient = patientService.findOne(dto.getIdPatient());
 		
-		if (appointmentDao.exists(dto.getIdAppointment())) {
+		if (dto.getIdAppointment() != null && appointmentDao.exists(dto.getIdAppointment())) {
 			appointment = appointmentDao.findOne(dto.getIdAppointment());			
 		} else {
 			appointment = new Appointment();
@@ -90,11 +90,12 @@ public class MapperServiceImpl implements MapperService{
 		final Doctor doctor = doctorService.findOne(dto.getIdDoctor());
 		final Room room = roomService.findOne(dto.getIdRoom());
 		
-		if (consultationDao.exists(dto.getIdConsultation())) {
+		if (dto.getIdConsultation()!=null && consultationDao.exists(dto.getIdConsultation())) {
 			consultation = consultationDao.findOne(dto.getIdConsultation());			
 		} else {
 			consultation = new Consultation();
 		}
+		consultation.setId(dto.getIdConsultation());
 		consultation.setTurn(dto.getTurn());
 		consultation.setDate(dto.getDate());
 		consultation.setDoctor(doctor);
@@ -111,16 +112,29 @@ public class MapperServiceImpl implements MapperService{
 		dto.setIdRoom(c.getRoom().getId());
 		dto.setIdDoctor(c.getDoctor().getId());
 		return dto;
-	}	
+	}
 
 	@Override
 	public Doctor map(DoctorDTO dto) {
-		return mapper.map(dto, Doctor.class);
+		final Doctor doctor = new Doctor();
+		doctor.setId(dto.getIdDoctor());
+		doctor.setIdApi(dto.getIdApi());
+		doctor.setName(dto.getNameDoctor());
+		doctor.setLastname(dto.getLastnameDoctor());
+		return doctor;
 	}
 
 	@Override
 	public DoctorDTO map(Doctor d) {
-		return mapper.map(d, DoctorDTO.class);
+		final DoctorDTO doctor = new DoctorDTO();
+		doctor.setIdDoctor(d.getId());
+		doctor.setNameDoctor(d.getName());
+		doctor.setLastnameDoctor(d.getLastname());
+		if(d.getIdApi()!=null) {
+			doctor.setIdApi(d.getIdApi());
+			doctor.setPrice(doctorService.getDoctorPrice(d.getIdApi()));
+		}
+		return doctor;
 	}
 
 	@Override
@@ -142,5 +156,4 @@ public class MapperServiceImpl implements MapperService{
 	public RoomDTO map(Room r) {
 		return mapper.map(r, RoomDTO.class);
 	}
-
 }

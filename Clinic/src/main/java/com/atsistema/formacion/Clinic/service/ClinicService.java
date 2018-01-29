@@ -5,7 +5,6 @@ import java.util.List;
 import com.atsistema.formacion.Clinic.dto.ClinicDTO;
 import com.atsistema.formacion.Clinic.dto.RoomDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
-import com.atsistema.formacion.Clinic.model.Clinic;
 
 public interface ClinicService {
 	
@@ -32,7 +31,7 @@ public interface ClinicService {
 	 * @param nameRoom
 	 * @return
 	 */
-	public List<ClinicDTO> finByName(String nameRoom);
+	public List<ClinicDTO> findByName(String nameRoom);
 	
 	/**
 	 * Recupera todas las Salas de una Clinica 
@@ -64,20 +63,4 @@ public interface ClinicService {
 	 */
 	public void delete(Integer idClinic) throws NotFoundException;
 	
-	/**
-	 * Transforma una ClinicaDTO en una Clinica
-	 * 
-	 * @param dto
-	 * @return
-	 */
-	public Clinic map(ClinicDTO dto);
-	
-	/**
-	 * Transforma una Clinica en una ClinicaDTO
-	 * 
-	 * @param clinic
-	 * @return
-	 */
-	public ClinicDTO map(Clinic c);
-
 }

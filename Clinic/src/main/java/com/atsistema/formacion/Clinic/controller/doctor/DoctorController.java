@@ -56,28 +56,38 @@ public class DoctorController {
 		log.info("Recuperando todas las Consultas del Doctor con id = " + idDoctor);
 		return doctorService.findConsultationsByIdDoctor(idDoctor);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/rest")
-	public List<DoctorDTO> findAPI(){
+	public List<DoctorApiDTO> findAPI(){
 		log.info("Recuperando toda la lista de Doctores REST");
-		List<DoctorDTO> resultado = restTemplate.getForObject("http://doctor.dbgjerez.es:8080/api/doctor?size=20", List.class);
+		@SuppressWarnings("unchecked")
+		List<DoctorApiDTO> resultado = restTemplate.getForObject("http://doctor.dbgjerez.es:8080/api/doctor?size=20", List.class);
 		return resultado.stream().collect(Collectors.toList());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/ranking")
-	public List<DoctorDTO> find5ByNameOrderByPatientsDesc(){
+	public List<DoctorDTO> find5OrderByPatientsDesc(@RequestParam(required=false, defaultValue="5") Integer size){
 		log.info("Recuperando lista de Doctores con más Pacientes");
-		return doctorService.find5ByNameOrderByPatientsDesc();
+		return doctorService.find5OrderByPatientsDesc(0, size);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/stats")
-	public List<DoctorApiDTO> findByDate(@RequestParam(required=false, defaultValue="2018-01-01") String ini, @RequestParam(required=false, defaultValue="2018-12-31") String end) throws ParseException {
+	public List<DoctorDTO> findByDate(@RequestParam(required=false, defaultValue="2018-01-01") String ini, @RequestParam(required=false, defaultValue="2018-12-31") String end) throws ParseException {
 		log.info("Recuperando lista de Doctores con número de Citas y Beneficios en intervalo de Fechas");
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date iniDate = formato.parse(ini);
         Date endDate = formato.parse(end);
-        final List<DoctorApiDTO> doctors = doctorService.findByDate(iniDate,endDate);
+        final List<DoctorDTO> doctors = doctorService.findByDate(iniDate,endDate);
 		return doctors;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/details")
+	public List<DoctorApiDTO> findByStatsDate(@RequestParam(required=false, defaultValue="2018-01-01") String ini, @RequestParam(required=false, defaultValue="2018-12-31") String end) throws ParseException {
+		log.info("Recuperando lista de Doctores con número de Citas y Beneficios en intervalo de Fechas");
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		Date iniDate = formato.parse(ini);
+        Date endDate = formato.parse(end);
+        return doctorService.findStatsByDate(iniDate,endDate);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

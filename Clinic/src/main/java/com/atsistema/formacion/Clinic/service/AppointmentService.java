@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
-import com.atsistema.formacion.Clinic.model.Appointment;
 
 public interface AppointmentService {
 
@@ -49,20 +48,4 @@ public interface AppointmentService {
 	 */
 	public void delete(Integer idAppointment) throws NotFoundException;
 	
-	/**
-	 * Transforma una CitaDTO en una Cita
-	 * 
-	 * @param dto
-	 * @return
-	 * @throws NotFoundException 
-	 */
-	public Appointment map(AppointmentDTO dto) throws NotFoundException;
-	
-	/**
-	 * Transforma una Cita en una CitaDTO
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public AppointmentDTO map(Appointment a);
 }

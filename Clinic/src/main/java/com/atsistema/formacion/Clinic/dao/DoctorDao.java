@@ -3,6 +3,7 @@ package com.atsistema.formacion.Clinic.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,11 @@ import com.atsistema.formacion.Clinic.model.Doctor;
 @Repository
 public interface DoctorDao extends PagingAndSortingRepository<Doctor, Integer>{
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public List<Doctor> findByName(String name);
 	
 	/**
@@ -22,6 +28,7 @@ public interface DoctorDao extends PagingAndSortingRepository<Doctor, Integer>{
 	 * JOIN appointment ON consultation.id = appointment.consultation_id 
 	 * GROUP BY doctor.id 
 	 * ORDER BY Pacientes DESC;
+	 * @param pageRequest 
 	 * @return
 	 */
 	@Query(value = "select d from Doctor as d  "
@@ -29,7 +36,7 @@ public interface DoctorDao extends PagingAndSortingRepository<Doctor, Integer>{
 			+ " INNER JOIN c.appointments as a"
 			+ " GROUP BY d.id"
 			+ " ORDER BY COUNT(DISTINCT a.patient) DESC")
-	public List<Doctor> find5ByNameOrderByPatientsDesc();
+	public List<Doctor> find5ByNameOrderByPatientsDesc(Pageable pageRequest);
 
 	/**
 	 * @Query(value = "select d from Doctor as d  "
