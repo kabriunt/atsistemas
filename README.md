@@ -47,6 +47,7 @@ FUNCIONALIDAD DE LA APLICACIÓN
 	-Listar todos los Médicos de un servicio REST ->	http://localhost:8080/api/doctor/rest
 	-Encontrar los N primeros Médicos con mas Pacientes ->		http://localhost:8080/api/doctor/ranking (?size={N})(por defecto muestra los 5 primeros)
 	-Encontrar Médicos con Numero de Citas realizadas entre una fecha dada -> http://localhost:8080/api/doctor/stats (?ini=yyyy-mm-dd&end=yyyy-mm-dd)(Por defecto muestra todo el año)
-  -Encontrar Médicos con Numero de Citas realizadas entre una fecha dada, numero de citas y benecifios obtenidos -> http://localhost:8080/api/doctor/details
+	-Encontrar Médicos con Numero de Citas realizadas entre una fecha dada, numero de citas y benecifios obtenidos -> http://localhost:8080/api/doctor/details
+  
 
 
