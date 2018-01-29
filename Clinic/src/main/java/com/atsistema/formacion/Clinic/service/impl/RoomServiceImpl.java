@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ import com.atsistema.formacion.Clinic.dto.ConsultationDTO;
 import com.atsistema.formacion.Clinic.dto.RoomDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
 import com.atsistema.formacion.Clinic.model.Room;
-import com.atsistema.formacion.Clinic.service.ConsultationService;
+import com.atsistema.formacion.Clinic.service.MapperService;
 import com.atsistema.formacion.Clinic.service.RoomService;
 
 @Service
@@ -25,21 +24,18 @@ public class RoomServiceImpl implements RoomService{
 	private RoomDao roomDao;
 	
 	@Autowired
-	private ConsultationService consultationService;
-	
-	@Autowired
-	private DozerBeanMapper mapper;
+	private MapperService mp;
 	
 	@Override
 	public List<RoomDTO> findAll(Integer page, Integer size) {
 		List<Room> Rooms = (List<Room>) roomDao.findAll(new PageRequest(page, size)).getContent();
-		return Rooms.stream().map(u->map(u)).collect(Collectors.toList());
+		return Rooms.stream().map(u->mp.map(u)).collect(Collectors.toList());
 	}
 
 	@Override
 	public RoomDTO findById(Integer idRoom) throws NotFoundException {
 		Room find = roomDao.findOne(idRoom);
-		return map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
+		return mp.map(Optional.ofNullable(find).orElseThrow(NotFoundException::new));
 	}
 	
 
@@ -53,34 +49,24 @@ public class RoomServiceImpl implements RoomService{
 	public List<ConsultationDTO> findConsultationsByIdRoom(Integer idRoom) {
 		final Room room = roomDao.findOne(idRoom);
 		final List<ConsultationDTO> consultations = new ArrayList<>();
-		room.getConsultations().forEach(a -> consultations.add(consultationService.map(a)));
+		room.getConsultations().forEach(a -> consultations.add(mp.map(a)));
 		return consultations;
 	}
 
 	@Override
 	public RoomDTO create(RoomDTO r) {
-		final Room room = roomDao.save(map(r));
-		return map(room);
+		final Room room = roomDao.save(mp.map(r));
+		return mp.map(room);
 	}
 
 	@Override
 	public void update(RoomDTO r) {
-		final Room room = roomDao.save(map(r));
-		map(room);		
+		final Room room = roomDao.save(mp.map(r));
+		mp.map(room);		
 	}
 
 	@Override
 	public void delete(Integer idRoom) throws NotFoundException{
 		roomDao.delete(idRoom);	
-	}
-
-	@Override
-	public Room map(RoomDTO dto) {
-		return mapper.map(dto, Room.class);
-	}
-
-	@Override
-	public RoomDTO map(Room r) {
-		return mapper.map(r, RoomDTO.class);
 	}
 }

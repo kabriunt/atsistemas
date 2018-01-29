@@ -57,9 +57,11 @@ public interface DoctorService {
 	/**
 	 * Recupera los n Doctores con mas Pacientes
 	 * 
+	 * @param page
+	 * @param size
 	 * @return
 	 */
-	public List<DoctorDTO> find5ByNameOrderByPatientsDesc();
+	public List<DoctorDTO> find5OrderByPatientsDesc(Integer page, Integer size);
 
 	/**
 	 * Recupera los N Doctores que han realizado consultas entre las fechas dadas
@@ -68,7 +70,25 @@ public interface DoctorService {
 	 * @param end
 	 * @return
 	 */
-	public List<DoctorApiDTO> findByDate(Date iniDate, Date endDate);
+	public List<DoctorDTO> findByDate(Date iniDate, Date endDate);
+	
+	/**
+	 * Devuelve una lista de Doctores con consultas en una fecha dada,
+	 * el numero de consultas y sus ganancias
+	 * 
+	 * @param iniDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<DoctorApiDTO> findStatsByDate(Date iniDate, Date endDate);
+	
+	/**
+	 * Devuelve el precio de un Doctor
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Double getDoctorPrice(String id);
 
 	/**
 	 * Crea un Doctor
@@ -91,28 +111,5 @@ public interface DoctorService {
 	 * @param d
 	 */
 	public void delete(Integer d) throws NotFoundException;
-	
-	/**
-	 * Transforma un DoctorDTO en un Doctor
-	 * 
-	 * @param dto
-	 * @return
-	 */
-	public Doctor map(DoctorDTO dto);
-	
-	/**
-	 * Transforma un Doctor en un DoctorDTO
-	 * 
-	 * @param doctor
-	 * @return
-	 */
-	public DoctorDTO map(Doctor d);
-
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	public DoctorApiDTO mapApi(Doctor d);
 
 }

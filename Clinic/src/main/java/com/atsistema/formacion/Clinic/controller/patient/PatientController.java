@@ -38,9 +38,22 @@ public class PatientController {
 		return patientService.findById(idPatient);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/name={namePatient}")
+	public List<PatientDTO> findByName(@PathVariable String namePatient){
+		log.info("Recuperando Clinica con nombre = " + namePatient);
+		return patientService.finByName(namePatient);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/{idPatient}/appointments")
 	public List<AppointmentDTO> findAppointmentsByIdPatient(@PathVariable Integer idPatient) {
+		log.info("Recuperando Numero de Citas del Paciente con Id = " + idPatient);
 		return patientService.findAppointmentsByIdPatient(idPatient);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{idPatient}/num")
+	public Integer findStringByIdPatient(@PathVariable Integer idPatient) {
+		log.info("Recuperando Paciente con Id = " + idPatient);
+		return patientService.findAppointmentsByIdPatient(idPatient).size();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

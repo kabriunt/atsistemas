@@ -10,13 +10,6 @@ import lombok.Data;
 public class DoctorDTO implements Serializable{
 
 	private static final long serialVersionUID = -4699796476722187752L;
-/*
-	private String id;
-
-	private String name;
-	
-	private Double price;
-*/
 
 	@Mapping("id")
 	private Integer idDoctor;
@@ -31,8 +24,4 @@ public class DoctorDTO implements Serializable{
 	private String lastnameDoctor;
 	
 	private Double price;
-
-	
-	//@Mapping(value = "consultations")
-	//private List<Consultation> idConsultations = new ArrayList<>();
 }

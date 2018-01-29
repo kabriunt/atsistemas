@@ -1,5 +1,6 @@
 package com.atsistema.formacion.Clinic.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.atsistema.formacion.Clinic.dto.AppointmentDTO;
@@ -42,6 +43,15 @@ public interface ConsultationService {
 	 * @return
 	 */
 	public List<AppointmentDTO> findAppointmentsByIdConsultation(Integer idConsultation);
+	
+	/**
+	 * Recupera Consultas entre dos fechas
+	 * 
+	 * @param iniDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<Consultation> findByDate(Date iniDate, Date endDate);
 
 	/**
 	 * Crea una Consulta
@@ -66,22 +76,5 @@ public interface ConsultationService {
 	 * @param idConsultation
 	 */
 	public void delete(Integer idConsultation) throws NotFoundException;
-
-	/**
-	 * Transforma una ConsultaDTO en una Consulta
-	 * 
-	 * @param dto
-	 * @return
-	 * @throws NotFoundException 
-	 */
-	public Consultation map(ConsultationDTO dto) throws NotFoundException;
-	
-	/**
-	 * Transforma una Consulta en una ConsultaDTO
-	 * 
-	 * @param c
-	 * @return
-	 */
-	public ConsultationDTO map(Consultation c);
 
 }

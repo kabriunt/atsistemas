@@ -36,6 +36,14 @@ public interface PatientService {
 	public Patient findOne(Integer idPatient) throws NotFoundException;
 	
 	/**
+	 * Busca por Nombre
+	 * 
+	 * @param nameRoom
+	 * @return
+	 */
+	public List<PatientDTO> finByName(String namePatient);
+	
+	/**
 	 * Recupera todas la Citas de un Paciente
 	 * 
 	 * @param idPatient
@@ -65,21 +73,5 @@ public interface PatientService {
 	 * @param idPatient
 	 */
 	public void delete(Integer idPatient) throws NotFoundException;
-	
-	/**
-	 * Transforma un PacienteDTO en un Paciente
-	 * 
-	 * @param dto
-	 * @return
-	 */
-	public Patient map(PatientDTO dto);
-	
-	/**
-	 * Transforma un Paciente en un PacienteDTO
-	 * 
-	 * @param p
-	 * @return
-	 */
-	public PatientDTO map(Patient p);
 
 }
