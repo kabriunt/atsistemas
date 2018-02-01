@@ -22,7 +22,7 @@ public class Doctor {
 	@GeneratedValue
 	private Integer id;
 	
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = true)
 	private String idApi;
 	
 	private String name;

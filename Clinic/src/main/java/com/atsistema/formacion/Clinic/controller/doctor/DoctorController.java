@@ -77,8 +77,7 @@ public class DoctorController {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date iniDate = formato.parse(ini);
         Date endDate = formato.parse(end);
-        final List<DoctorDTO> doctors = doctorService.findByDate(iniDate,endDate);
-		return doctors;
+        return doctorService.findByDate(iniDate,endDate);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/details")

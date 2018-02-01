@@ -123,18 +123,10 @@ public class MapperServiceImpl implements MapperService{
 		doctor.setLastname(dto.getLastnameDoctor());
 		return doctor;
 	}
-
+	
 	@Override
 	public DoctorDTO map(Doctor d) {
-		final DoctorDTO doctor = new DoctorDTO();
-		doctor.setIdDoctor(d.getId());
-		doctor.setNameDoctor(d.getName());
-		doctor.setLastnameDoctor(d.getLastname());
-		if(d.getIdApi()!=null) {
-			doctor.setIdApi(d.getIdApi());
-			doctor.setPrice(doctorService.getDoctorPrice(d.getIdApi()));
-		}
-		return doctor;
+		return mapper.map(d, DoctorDTO.class);
 	}
 
 	@Override

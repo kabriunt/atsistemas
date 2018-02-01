@@ -85,17 +85,23 @@ public class DoctorServiceImpl implements DoctorService{
 	public List<DoctorApiDTO> findStatsByDate(Date iniDate, Date endDate){
 		List<Consultation> consultations = consultationService.findByDate(iniDate,endDate);
 		List<DoctorApiDTO> doctors = new ArrayList<>();
-		DoctorApiDTO dto = new DoctorApiDTO();
-		for(Consultation c : consultations)
-		{
-			dto.setIdInternal(c.getDoctor().getId());
-			dto.setId(c.getDoctor().getIdApi());
-			dto.setAppointments(c.getAppointments().size());
-			dto.setPrice(getDoctorPrice(dto.getId()));
-			dto.setBenefits(dto.getPrice()*dto.getAppointments());
-			doctors.add(dto);
+		for(Consultation c : consultations){
+			FillStats(c,doctors);
 		}
 		return doctors;
+	}
+	
+	@Override
+	public void FillStats(Consultation c, List<DoctorApiDTO> doctors){
+		DoctorApiDTO dto = new DoctorApiDTO();
+		dto.setIdInternal(c.getDoctor().getId());
+		dto.setId(c.getDoctor().getIdApi());
+		dto.setAppointments(c.getAppointments().size());
+		if (dto.getId() != null ) {
+			dto.setPrice(getDoctorPrice(dto.getId()));
+			dto.setBenefits(dto.getPrice()*dto.getAppointments());
+		}
+		doctors.add(dto);
 	}
 	
 	@Override

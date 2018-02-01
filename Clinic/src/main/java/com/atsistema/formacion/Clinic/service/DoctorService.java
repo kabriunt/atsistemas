@@ -7,6 +7,7 @@ import com.atsistema.formacion.Clinic.dto.ConsultationDTO;
 import com.atsistema.formacion.Clinic.dto.DoctorApiDTO;
 import com.atsistema.formacion.Clinic.dto.DoctorDTO;
 import com.atsistema.formacion.Clinic.exception.NotFoundException;
+import com.atsistema.formacion.Clinic.model.Consultation;
 import com.atsistema.formacion.Clinic.model.Doctor;
 
 public interface DoctorService {
@@ -81,6 +82,13 @@ public interface DoctorService {
 	 * @return
 	 */
 	public List<DoctorApiDTO> findStatsByDate(Date iniDate, Date endDate);
+	
+	/**
+	 * 
+	 * @param c
+	 * @param doctors
+	 */
+	public void FillStats(Consultation c, List<DoctorApiDTO> doctors);
 	
 	/**
 	 * Devuelve el precio de un Doctor

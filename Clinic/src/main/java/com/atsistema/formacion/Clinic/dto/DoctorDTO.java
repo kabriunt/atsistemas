@@ -22,6 +22,4 @@ public class DoctorDTO implements Serializable{
 	
 	@Mapping(value="lastname")
 	private String lastnameDoctor;
-	
-	private Double price;
 }

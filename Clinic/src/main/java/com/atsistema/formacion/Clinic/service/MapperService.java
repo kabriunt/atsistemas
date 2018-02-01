@@ -83,6 +83,13 @@ public interface MapperService {
 	public DoctorDTO map(Doctor d);
 	
 	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	//public DoctorDTO map(DoctorApiDTO d);
+	
+	/**
 	 * Transforma un PacienteDTO en un Paciente
 	 * 
 	 * @param dto
